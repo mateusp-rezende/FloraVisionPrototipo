@@ -31,7 +31,7 @@ const InfoPanel = ({ data }: InfoPanelProps) => {
           </div>
         </div>
       </DrawerTrigger>
-      <DrawerContent className="bg-gray-100/90 backdrop-blur-sm max-h-[70vh]">
+      <DrawerContent className="bg-gray-100/90 backdrop-blur-sm max-h-[100vh]">
         <div className="mx-auto w-full max-w-2xl">
           <DrawerHeader>
             <DrawerTitle className="text-2xl font-bold text-center">{data.locationName}</DrawerTitle>
