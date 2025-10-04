@@ -13,16 +13,16 @@ interface InfoPanelProps {
 
 const InfoPanel = ({ data }: InfoPanelProps) => {
   const probabilityColor = {
-    "ALTA": "bg-green-500 hover:bg-green-600",
-    "MÉDIA": "bg-yellow-500 hover:bg-yellow-600",
-    "BAIXA": "bg-red-500 hover:bg-red-600",
+    "ALTA": "bg-green-500/80 hover:bg-green-500/90",
+    "MÉDIA": "bg-yellow-500/80 hover:bg-yellow-500/90",
+    "BAIXA": "bg-red-500/80 hover:bg-red-500/90",
   }[data.plantingProbability];
 
   return (
     <Drawer>
       <DrawerTrigger asChild>
         <div className={cn(
-          "absolute bottom-0 left-0 right-0 z-30 p-4 text-white text-center rounded-t-2xl cursor-pointer transition-colors pointer-events-auto",
+          "absolute bottom-0 left-0 right-0 z-30 p-4 text-white text-center rounded-t-2xl cursor-pointer transition-colors pointer-events-auto backdrop-blur-sm",
           probabilityColor
         )}>
           <div className="flex flex-col items-center">
