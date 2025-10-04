@@ -66,7 +66,7 @@ const FloraVisionDashboard = () => {
     <div className="relative w-full h-full">
       {/* Background Satellite Map Image */}
       <img
-        src="https://images.unsplash.com/photo-1542863282-00144736a633?q=80&w=2670&auto=format&fit=crop"
+        src="https://www.baseaerofoto.com.br/wp-content/uploads/2022/02/diferencas-entre-imagens-aereas-e-imagens-de-satelites.jpg"
         alt="Satellite map of a rural area"
         className="absolute inset-0 w-full h-full object-cover z-0"
       />
