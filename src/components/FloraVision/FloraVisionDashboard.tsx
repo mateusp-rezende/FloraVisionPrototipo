@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import SearchBar from './SearchBar';
 import ActionButtons from './ActionButtons';
 import InfoPanel from './InfoPanel';
 
-// Initial mock data to represent the user's primary location
-const initialMockLocationData = {
+// Mock data simulating an API response for a selected location
+const mockLocationData = {
   locationName: "Fazenda Boa Esperança, MG",
-  plantingProbability: "ALTA" as "ALTA" | "MÉDIA" | "BAIXA",
+  plantingProbability: "ALTA",
   plantingWindow: {
     recommendation: "Ideal",
     analysis: "A combinação de chuvas recentes, umidade do solo adequada e previsão de sol moderado cria uma janela de plantio perfeita para os próximos 3-5 dias."
@@ -36,26 +36,6 @@ const initialMockLocationData = {
 
 
 const FloraVisionDashboard = () => {
-  const [locationData, setLocationData] = useState(initialMockLocationData);
-
-  const handleSearch = (query: string) => {
-    if (!query) return;
-
-    // Simulate fetching new data for the searched location
-    const probabilities: ("ALTA" | "MÉDIA" | "BAIXA")[] = ["ALTA", "MÉDIA", "BAIXA"];
-    const randomProbability = probabilities[Math.floor(Math.random() * probabilities.length)];
-
-    setLocationData(prevData => ({
-      ...prevData,
-      locationName: query,
-      plantingProbability: randomProbability,
-    }));
-  };
-
-  const handleRecenter = () => {
-    setLocationData(initialMockLocationData);
-  };
-
   return (
     <div className="relative w-full h-full">
       {/* Background Satellite Map Image */}
@@ -67,14 +47,14 @@ const FloraVisionDashboard = () => {
 
       {/* Floating UI Elements */}
       <div className="absolute inset-0 z-10 p-4 flex flex-col justify-between pointer-events-none">
-        <SearchBar onSearch={handleSearch} />
+        <SearchBar />
         
         {/* This div is a placeholder to push the InfoPanel to the bottom */}
         <div></div>
       </div>
       
-      <ActionButtons onRecenter={handleRecenter} />
-      <InfoPanel data={locationData} />
+      <ActionButtons />
+      <InfoPanel data={mockLocationData} />
 
     </div>
   );
