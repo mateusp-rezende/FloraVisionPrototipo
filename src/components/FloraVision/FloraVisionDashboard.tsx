@@ -1,25 +1,48 @@
 import React, { useState } from 'react';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { LatLngExpression } from 'leaflet';
+
 import SearchBar from './SearchBar';
 import ActionButtons from './ActionButtons';
 import InfoPanel from './InfoPanel';
 import { showSuccess } from '@/utils/toast';
 
-// Mock data simulating an API response for a selected location
-const initialLocationData = {
+// 1. (Refinamento) Criando uma interface para tipagem forte dos dados
+interface LocationData {
+  locationName: string;
+  plantingProbability: 'ALTA' | 'MÉDIA' | 'BAIXA';
+  coords: LatLngExpression;
+  plantingWindow: {
+    recommendation: string;
+    analysis: string;
+  };
+  precipitation: Array<{ day: string; rain: number }>;
+  bioindicator: {
+    status: string;
+    interpretation: string;
+  };
+  solarIncidence: {
+    classification: string;
+    hours: string;
+  };
+  airQuality: {
+    classification: string;
+    details: string;
+  };
+}
+
+// Dados iniciais com coordenadas
+const initialLocationData: LocationData = {
   locationName: "Fazenda Da Soja- MG",
+  coords: [-19.9167, -43.9345], // Coordenadas de Belo Horizonte, MG como exemplo
   plantingProbability: "ALTA",
   plantingWindow: {
     recommendation: "Ideal",
     analysis: "A combinação de chuvas recentes, umidade do solo adequada e previsão de sol moderado cria uma janela de plantio perfeita para os próximos 3-5 dias."
   },
   precipitation: [
-    { day: "Hoje", rain: 5 },
-    { day: "Ter", rain: 15 },
-    { day: "Qua", rain: 8 },
-    { day: "Qui", rain: 2 },
-    { day: "Sex", rain: 0 },
-    { day: "Sáb", rain: 0 },
-    { day: "Dom", rain: 3 },
+    { day: "Hoje", rain: 5 }, { day: "Ter", rain: 15 }, { day: "Qua", rain: 8 },
+    { day: "Qui", rain: 2 }, { day: "Sex", rain: 0 }, { day: "Sáb", rain: 0 }, { day: "Dom", rain: 3 },
   ],
   bioindicator: {
     status: "Floração Ativa",
@@ -36,19 +59,20 @@ const initialLocationData = {
 };
 
 const FloraVisionDashboard = () => {
-  const [locationData, setLocationData] = useState(initialLocationData);
+  const [locationData, setLocationData] = useState<LocationData>(initialLocationData);
 
   const handleSearch = (query: string) => {
     if (!query) return;
 
-    // Simulate fetching new data for the searched location
-    const probabilities = ["ALTA", "MÉDIA", "BAIXA"];
+    const probabilities: Array<'ALTA' | 'MÉDIA' | 'BAIXA'> = ["ALTA", "MÉDIA", "BAIXA"];
     const randomProbability = probabilities[Math.floor(Math.random() * probabilities.length)];
 
     setLocationData(prevData => ({
       ...prevData,
       locationName: query,
       plantingProbability: randomProbability,
+      // Em um app real, você buscaria as novas coordenadas aqui
+      coords: [-23.5505, -46.6333], // Ex: Coordenadas de São Paulo
     }));
     showSuccess(`Exibindo dados para ${query}`);
   };
@@ -64,19 +88,33 @@ const FloraVisionDashboard = () => {
 
   return (
     <div className="relative w-full h-full">
-      {/* Background Satellite Map Image */}
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3817.2794943136378!2d-49.36318202572967!3d-16.911499951451802!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x935effe6bdc2f5e7%3A0xfd604fba915c8632!2sFazenda%20Jabuticabal!5e0!3m2!1spt-BR!2sbr!4v1759676661213!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      {/* 2. (Ponto Principal) Mapa Interativo com React Leaflet */}
+      <MapContainer center={locationData.coords} zoom={13} scrollWheelZoom={true} className="w-full h-full z-0">
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <Marker position={locationData.coords}>
+          <Popup>
+            {locationData.locationName} <br /> Probabilidade de Plantio: {locationData.plantingProbability}
+          </Popup>
+        </Marker>
+      </MapContainer>
 
-      {/* Floating UI Elements */}
+      {/* 3. (Refinamento) Agrupando UI flutuante em um único container */}
       <div className="absolute inset-0 z-10 p-4 flex flex-col justify-between pointer-events-none">
-        <SearchBar onSearch={handleSearch} />
+        <div className="pointer-events-auto">
+          <SearchBar onSearch={handleSearch} />
+        </div>
         
-        <div></div>
+        {/* Espaçador para empurrar o resto para baixo (se necessário) */}
+        <div className="flex-grow"></div> 
+        
+        <div className="flex items-end gap-4 pointer-events-auto">
+          <InfoPanel data={locationData} />
+          <ActionButtons onRecenter={handleRecenter} onLayersClick={handleLayersClick} />
+        </div>
       </div>
-      
-      <ActionButtons onRecenter={handleRecenter} onLayersClick={handleLayersClick} />
-      <InfoPanel data={locationData} />
-
     </div>
   );
 };
