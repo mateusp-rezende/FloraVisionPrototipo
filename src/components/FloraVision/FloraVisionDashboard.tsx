@@ -6,7 +6,7 @@ import { showSuccess } from '@/utils/toast';
 
 // Mock data simulating an API response for a selected location
 const initialLocationData = {
-  locationName: "Fazenda Boa Esperança, MG",
+  locationName: "Fazenda Da Soja- MG",
   plantingProbability: "ALTA",
   plantingWindow: {
     recommendation: "Ideal",
@@ -65,11 +65,7 @@ const FloraVisionDashboard = () => {
   return (
     <div className="relative w-full h-full">
       {/* Background Satellite Map Image */}
-      <img
-        src="https://www.baseaerofoto.com.br/wp-content/uploads/2022/02/diferencas-entre-imagens-aereas-e-imagens-de-satelites.jpg"
-        alt="Satellite map of a rural area"
-        className="absolute inset-0 w-full h-full object-cover z-0"
-      />
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3817.2794943136378!2d-49.36318202572967!3d-16.911499951451802!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x935effe6bdc2f5e7%3A0xfd604fba915c8632!2sFazenda%20Jabuticabal!5e0!3m2!1spt-BR!2sbr!4v1759676661213!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 
       {/* Floating UI Elements */}
       <div className="absolute inset-0 z-10 p-4 flex flex-col justify-between pointer-events-none">
