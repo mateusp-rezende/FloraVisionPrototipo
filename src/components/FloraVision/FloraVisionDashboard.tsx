@@ -65,8 +65,11 @@ const FloraVisionDashboard = () => {
   return (
     <div className="relative w-full h-full">
       {/* Background Satellite Map Image */}
-      <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Ffazendadatoca.com.br%2Fmapa-da-fazenda%2F&psig=AOvVaw385TjhkBaO3g2o3pz997Zr&ust=1759774284373000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCJDB1prUjZADFQAAAAAdAAAAABAE" alt="Minha Figura">
-      {/* Floating UI Elements */}
+       <img
+    src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Satellite_image_example.jpg/800px-Satellite_image_example.jpg"
+    alt="Mapa Satélite da Fazenda"
+    className="w-full h-full object-cover"
+  />
       <div className="absolute inset-0 z-10 p-4 flex flex-col justify-between pointer-events-none">
         <SearchBar onSearch={handleSearch} />
         
