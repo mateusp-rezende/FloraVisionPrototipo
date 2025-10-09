@@ -66,7 +66,7 @@ const FloraVisionDashboard = () => {
     <div className="relative w-full h-full">
       {/* Background Satellite Map Image */}
        <img
-    src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Satellite_image_example.jpg/800px-Satellite_image_example.jpg"
+    src="https://fossbytes.com/wp-content/uploads/2025/01/minecraft-map-featured-image-1.jpg"
     alt="Mapa Satélite da Fazenda"
     className="w-full h-full object-cover"
   />
